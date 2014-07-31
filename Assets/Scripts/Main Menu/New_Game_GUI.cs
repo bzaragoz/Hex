@@ -5,8 +5,8 @@ using System;
 
 public class New_Game_GUI : MonoBehaviour {
 	
-	static float originalWidth = 960;
-	static float originalHeight = 600;
+	float originalWidth = 960;
+	float originalHeight = 600;
 
 	static float newGameMenu_left = 0.04271f*Screen.width;
 	static float newGameMenu_top = 0.095f*Screen.height;

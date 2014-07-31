@@ -26,6 +26,7 @@ public class Title_GUI : MonoBehaviour {
 	public GUIStyle MainMenuWindow;
 	public GUIStyle MatteBox;
 	public GUIStyle Logo;
+	public GUIStyle LoadWindow;
 
 	// Load Window Textures
 	public Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/save");
@@ -62,7 +63,7 @@ public class Title_GUI : MonoBehaviour {
 	Rect logoWindow = new Rect(702, 56, 258, 83);
 	Rect mainMenuWindow = new Rect(40, 30, 238, 184);
 	Rect versionWindow = new Rect(742, 529, 165, 10); 
-	Rect loadGameWindow = new Rect(619, 30, 341, 540);
+	Rect loadGameWindow = new Rect(619, 30, 341, 542);
 	Rect settingsTabWindow = new Rect(619, 30, 50, 200);
 	Rect settingsWindow = new Rect(669, 30, 291, 542);
 	Rect exitWindow = new Rect((Screen.width/2)-(0.24792f*Screen.width/2), (Screen.height/2)-(0.17833f*Screen.height/2), 0.24792f*Screen.width, 0.17833f*Screen.height);
@@ -109,9 +110,10 @@ public class Title_GUI : MonoBehaviour {
 		LoadGameButton = new GUIStyle(GUI.skin.GetStyle("LoadGameButton"));
 		VersionLabel = new GUIStyle(GUI.skin.GetStyle("VersionLabel"));
 		LoadLabel = new GUIStyle(GUI.skin.GetStyle("LoadLabel"));
-		MainMenuWindow = new GUIStyle(GUI.skin.GetStyle ("MainMenuWindow"));
-		MatteBox = new GUIStyle(GUI.skin.GetStyle ("MatteBox"));
-		Logo = new GUIStyle(GUI.skin.GetStyle ("logo"));
+		MainMenuWindow = new GUIStyle(GUI.skin.GetStyle("MainMenuWindow"));
+		MatteBox = new GUIStyle(GUI.skin.GetStyle("MatteBox"));
+		Logo = new GUIStyle(GUI.skin.GetStyle("Logo"));
+		LoadWindow = new GUIStyle(GUI.skin.GetStyle("LoadWindow"));
 
 		//MainMenuButton.fontSize = (int)(0.15217f*mainMenu_height)+20;
 		LoadGameButton.fontSize = (int)(0.15833f*Screen.height)/6;
@@ -123,7 +125,7 @@ public class Title_GUI : MonoBehaviour {
 		versionWindow = GUI.Window (2, versionWindow, versionItems, "");
 		GUI.Box(new Rect (0, 572, 960, 30), "", MatteBox);
 		if (load)
-			loadGameWindow = GUI.Window(3, loadGameWindow, LoadGameItems, "");
+			loadGameWindow = GUI.Window(3, loadGameWindow, LoadGameItems, "", LoadWindow);
 		if (settings){
 			settingsTabWindow = GUI.Window (4, settingsTabWindow, SettingsTabItems, "");
 			settingsWindow = GUI.Window (5, settingsWindow, SettingsItems, "");
