@@ -3,22 +3,10 @@ using System.Collections;
 using System.Xml;
 using System;
 
-public class New_Game_GUI : MonoBehaviour {
-	
-	float originalWidth = 960;
-	float originalHeight = 600;
-
-	static float newGameMenu_left = 0.04271f*Screen.width;
-	static float newGameMenu_top = 0.095f*Screen.height;
-	static float newGameMenu_width = 0.91458f*Screen.width;
-	static float newGameMenu_height = 0.81f*Screen.height;
-	static float button_height = 0.15217f*newGameMenu_height;
-
-	// GUI Controller
-	GUI_Controller guiController;
+public class New_Game_GUI : Hex_GUI {
 
 	// GUI Skin and Styles
-	public GUISkin TitleSkin = (GUISkin)Resources.Load("Skins/TitleSkin");
+	public GUISkin TitleSkin;
 	public GUIStyle DifficultyLabel;
 	public GUIStyle HeaderLabel;
 	public GUIStyle HardToggle;
@@ -32,8 +20,6 @@ public class New_Game_GUI : MonoBehaviour {
 	// Difficulty Window Textures
 	public Texture2D hardTexture = (Texture2D)Resources.Load ("Textures/hard");
 
-	// Read .xml
-
 	// Window Rectangles
 	Rect difficultyWindow = new Rect(41, 57, 878, 486);
 
@@ -45,11 +31,22 @@ public class New_Game_GUI : MonoBehaviour {
 	// String Variables
 	string difficulty = "normal";
 
-	// GUI Items
+	// Load Skin
+	protected override void LoadSkin(){
+		TitleSkin = (GUISkin)Resources.Load ("Skins/TitleSkin");
+	}
 
-	// Run on Start
-	void Start(){
-		guiController = GameObject.Find ("GUI").GetComponent<GUI_Controller>();
+	// Load Styles
+	protected override void LoadStyles(){
+		DifficultyLabel = TitleSkin.GetStyle("DifficultyLabel");
+		HeaderLabel = TitleSkin.GetStyle ("HeaderLabel");
+		HardToggle = TitleSkin.GetStyle ("HardToggle");
+		NormalToggle = TitleSkin.GetStyle ("NormalToggle");
+		EasyToggle = TitleSkin.GetStyle ("EasyToggle");
+		HardWindow = TitleSkin.GetStyle ("HardWindow");
+		NormalWindow = TitleSkin.GetStyle ("NormalWindow");
+		EasyWindow = TitleSkin.GetStyle ("EasyWindow");
+		OKButton = TitleSkin.GetStyle ("OKButton");
 	}
 
 	// Run on GUI
@@ -61,16 +58,6 @@ public class New_Game_GUI : MonoBehaviour {
 		Matrix4x4 guiMatrix = Matrix4x4.identity;
 		guiMatrix.SetTRS(new Vector3(1, 1, 1), Quaternion.identity, new Vector3(ratio.x, ratio.y, 1));
 		GUI.matrix = guiMatrix;
-
-		DifficultyLabel = new GUIStyle(GUI.skin.GetStyle("DifficultyLabel"));
-		HeaderLabel = new GUIStyle(GUI.skin.GetStyle ("HeaderLabel"));
-		HardToggle = new GUIStyle(GUI.skin.GetStyle ("HardToggle"));
-		NormalToggle = new GUIStyle(GUI.skin.GetStyle ("NormalToggle"));
-		EasyToggle = new GUIStyle(GUI.skin.GetStyle ("EasyToggle"));
-		HardWindow = new GUIStyle(GUI.skin.GetStyle ("HardWindow"));
-		NormalWindow = new GUIStyle(GUI.skin.GetStyle ("NormalWindow"));
-		EasyWindow = new GUIStyle(GUI.skin.GetStyle ("EasyWindow"));
-		OKButton = new GUIStyle(GUI.skin.GetStyle ("OKButton"));
 
 		if (easyBool)
 			difficultyWindow = GUI.Window(0, difficultyWindow, difficultyItems, "", EasyWindow);

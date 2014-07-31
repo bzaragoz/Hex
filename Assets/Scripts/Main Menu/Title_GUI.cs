@@ -3,19 +3,7 @@ using System.Collections;
 using System.Xml;
 using System;
 
-public class Title_GUI : MonoBehaviour {
-
-	float originalWidth = 960;
-	float originalHeight = 600;
-
-	static float mainMenu_left = 0.04167f*Screen.width;
-	static float mainMenu_top = 0.05f*Screen.height;
-	static float mainMenu_width = 0.24792f*Screen.width;
-	static float mainMenu_height = 0.30667f*Screen.height;
-	static float button_height = 0.15217f*mainMenu_height;
-
-	// GUI Controller
-	GUI_Controller guiController;
+public class Title_GUI : Hex_GUI {
 
 	// GUI Skin and Styles
 	public GUISkin TitleSkin = (GUISkin)Resources.Load("Skins/TitleSkin");
@@ -88,12 +76,12 @@ public class Title_GUI : MonoBehaviour {
 	public float effectsVolume = 5.0F;
 	public float mouseSensitivity = 5.0F;
 
-	// Run on Start
-	void Start(){
-		guiController = GameObject.Find ("GUI").GetComponent<GUI_Controller>();
+	// Load Skin
+	protected override void LoadSkin(){
 	}
-
-	void Update(){
+	
+	// Load Styles
+	protected override void LoadStyles(){
 	}
 
 	// Run on GUI
@@ -283,7 +271,7 @@ public class Title_GUI : MonoBehaviour {
 
 	// Exit
 	void ExitItems(int windowID){
-		GUI.Label(new Rect(0,0, 200, button_height), "Are you sure you want to exit?");
+		GUI.Label(new Rect(0,0, 200, 25), "Are you sure you want to exit?");
 		if (GUI.Button (new Rect(0.01146f*Screen.width, 0.105f*Screen.height, 0.10625f*Screen.width, 0.05667f*Screen.height), "OK")) {
 			Application.Quit();
 		}
