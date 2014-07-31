@@ -1,0 +1,21 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Main Menu\Title_GUI.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Main Menu\New_Game_GUI.cs" Line="9" Column="36" />
+      <File FileName="Assets\Scripts\Main Menu\Title_GUI.cs" Line="10" Column="2" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Main Menu\New_Game_GUI.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Main Menu\GUI_Controller.cs" Line="21" Column="15" />
+      <File FileName="Assets\Scripts\Main Menu\Title_GUI.cs" Line="65" Column="52" />
+      <File FileName="Assets\Scripts\Main Menu\New_Game_GUI.cs" Line="121" Column="143" />
+>>>>>>> origin/gui_skins_and_styles
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

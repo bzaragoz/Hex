@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 7b939de6c84c12c46bed86f92917810f
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - CustomSkin: {fileID: 11400000, guid: c430d7440ed08d24aa8b02d99b9c3488, type: 2}
+  - TitleSkin: {instanceID: 0}
+  - okTexture: {instanceID: 0}
+  - cancelTexture: {instanceID: 0}
+  - loadTexture: {instanceID: 0}
+  - autosaveTexture: {instanceID: 0}
+  - save1Texture: {instanceID: 0}
+  - save2Texture: {instanceID: 0}
+  - save3Texture: {instanceID: 0}
+  - generalTexture: {instanceID: 0}
+  - graphicsTexture: {instanceID: 0}
+  - soundTexture: {instanceID: 0}
+  - controlsTexture: {instanceID: 0}
+  - applyTexture: {instanceID: 0}
+  - logoTexture: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 40c3b2eb7db9a9a4bbad3953511267c7
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - CustomSkin: {fileID: 11400000, guid: c430d7440ed08d24aa8b02d99b9c3488, type: 2}
+  - easyTexture: {instanceID: 0}
+  - normalTexture: {instanceID: 0}
+  - hardTexture: {instanceID: 0}
+  - okTexture: {instanceID: 0}
+  - cancelTexture: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

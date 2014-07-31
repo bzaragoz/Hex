@@ -1,0 +1,6 @@
+Credits
+
+1) Author: Bérenger
+   Source: AdvancedButton.cs
+   Link: http://wiki.unity3d.com/index.php/AdvancedButton
+
