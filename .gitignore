@@ -17,9 +17,19 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
 
+# ===
 # OSX
-# =========================
+# ===
+
 
 .DS_Store
 .AppleDouble
@@ -35,21 +45,18 @@ Icon
 .Spotlight-V100
 .Trashes
 
-# Unity3D .gitignore file.
-# Store this file at the root of your local repository.
-.DS_Store
-Library/AssetImportState
-Library/AssetServerCacheV3
-Library/FailedAssetImports.txt
-Library/ScriptAssemblies
-Library/ScriptMapper
-Library/assetDatabase3
-Library/cache
-Library/expandedItems
-Library/metadata
-Library/previews
-Library/guidmapper
-Temp
+
+# =========================
+# Temporary and local files
+# =========================
+[Oo]bj/
+[Tt]emp/
+[Ll]ibrary/
+*.tmproj
 *.csproj
-*.pidb
+*.unityproj
 *.sln
+*.suo
+*.user
+*.pidb
+*.userprefs
