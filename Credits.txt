@@ -4,3 +4,6 @@ Credits
    Source: AdvancedButton.cs
    Link: http://wiki.unity3d.com/index.php/AdvancedButton
 
+2) Author: ian mac
+   Source: Space Skybox
+   Link: http://forum.unity3d.com/threads/space-skybox.99258/
