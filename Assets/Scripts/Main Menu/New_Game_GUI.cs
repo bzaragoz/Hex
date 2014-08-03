@@ -6,7 +6,11 @@ using System;
 public class New_Game_GUI : Hex_GUI {
 
 	// GUI Skin and Styles
+<<<<<<< HEAD
 	public GUISkin TitleSkin;
+=======
+	public GUISkin NewGameSkin = (GUISkin)Resources.Load("Skins/NewGameSkin");
+>>>>>>> origin/skins_and_styles
 	public GUIStyle DifficultyLabel;
 	public GUIStyle HeaderLabel;
 	public GUIStyle HardToggle;
@@ -51,7 +55,7 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Run on GUI
 	void OnGUI () {
-		GUI.skin = TitleSkin;
+		GUI.skin = NewGameSkin;
 
 		// Set matrix
 		Vector2 ratio = new Vector2(Screen.width/originalWidth , Screen.height/originalHeight );

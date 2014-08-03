@@ -8,13 +8,15 @@ public class Title_GUI : Hex_GUI {
 	// GUI Skin and Styles
 	public GUISkin TitleSkin = (GUISkin)Resources.Load("Skins/TitleSkin");
 	public GUIStyle MainMenuButton;
-	public GUIStyle LoadGameButton;
+	public GUIStyle LoadSaveButton;
 	public GUIStyle VersionLabel;
 	public GUIStyle LoadLabel;
 	public GUIStyle MainMenuWindow;
 	public GUIStyle MatteBox;
-	public GUIStyle Logo;
+	public GUIStyle LogoBox;
 	public GUIStyle LoadWindow;
+	public GUIStyle HeaderLabel;
+	public GUIStyle SettingsTabWindow;
 
 	// Load Window Textures
 	public Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/save");
@@ -95,27 +97,29 @@ public class Title_GUI : Hex_GUI {
 		GUI.matrix = guiMatrix;
 
 		MainMenuButton = new GUIStyle(GUI.skin.GetStyle("MainMenuButton"));
-		LoadGameButton = new GUIStyle(GUI.skin.GetStyle("LoadGameButton"));
+		LoadSaveButton = new GUIStyle(GUI.skin.GetStyle("LoadSaveButton"));
 		VersionLabel = new GUIStyle(GUI.skin.GetStyle("VersionLabel"));
 		LoadLabel = new GUIStyle(GUI.skin.GetStyle("LoadLabel"));
 		MainMenuWindow = new GUIStyle(GUI.skin.GetStyle("MainMenuWindow"));
 		MatteBox = new GUIStyle(GUI.skin.GetStyle("MatteBox"));
-		Logo = new GUIStyle(GUI.skin.GetStyle("Logo"));
+		LogoBox = new GUIStyle(GUI.skin.GetStyle("LogoBox"));
 		LoadWindow = new GUIStyle(GUI.skin.GetStyle("LoadWindow"));
+		HeaderLabel = new GUIStyle (GUI.skin.GetStyle ("HeaderLabel"));;
+		SettingsTabWindow = new GUIStyle (GUI.skin.GetStyle ("SettingsTabWindow"));;
 
 		//MainMenuButton.fontSize = (int)(0.15217f*mainMenu_height)+20;
-		LoadGameButton.fontSize = (int)(0.15833f*Screen.height)/6;
+		LoadSaveButton.fontSize = (int)(0.15833f*Screen.height)/6;
 		VersionLabel.fontSize = (int)(0.03667f*Screen.height)+8;
 
 		GUI.Box(new Rect (0, 0, 960, 30), "", MatteBox);
-		logoWindow = GUI.Window(0, logoWindow, LogoItems, "", Logo);
+		logoWindow = GUI.Window(0, logoWindow, LogoItems, "", LogoBox);
 		mainMenuWindow = GUI.Window(1, mainMenuWindow, MainMenuItems, "", MainMenuWindow);
 		versionWindow = GUI.Window (2, versionWindow, versionItems, "");
 		GUI.Box(new Rect (0, 572, 960, 30), "", MatteBox);
 		if (load)
 			loadGameWindow = GUI.Window(3, loadGameWindow, LoadGameItems, "", LoadWindow);
 		if (settings){
-			settingsTabWindow = GUI.Window (4, settingsTabWindow, SettingsTabItems, "");
+			settingsTabWindow = GUI.Window (4, settingsTabWindow, SettingsTabItems, "", SettingsTabWindow);
 			settingsWindow = GUI.Window (5, settingsWindow, SettingsItems, "");
 		}
 		if (exit)
@@ -158,7 +162,7 @@ public class Title_GUI : Hex_GUI {
 
 	// Load Game
 	void LoadGameItems(int windowID){
-		AdvancedButtonResult autosaveResult = autosaveButton.Draw(new Rect(17, 18, 307, 95), new GUIContent("Autosave", autosaveTexture), LoadGameButton);
+		AdvancedButtonResult autosaveResult = autosaveButton.Draw(new Rect(21, 18, 307, 95), new GUIContent("  Jonathan\n  Difficulty: NORMAL\n  1-1: The Gatehouse\n  Progress: 3%", autosaveTexture), LoadSaveButton);
 		if (autosaveResult == AdvancedButtonResult.SimpleClick) {
 			loadGame = "Autosave";
 		}
@@ -166,7 +170,7 @@ public class Title_GUI : Hex_GUI {
 			loadGame = "none";
 			Application.LoadLevel ("Main Menu");
 		}
-		AdvancedButtonResult save1Result = save1Button.Draw(new Rect(17, 121, 307, 95), new GUIContent("Save 1", save1Texture), LoadGameButton);
+		AdvancedButtonResult save1Result = save1Button.Draw(new Rect(21, 121, 307, 95), new GUIContent("  Joseph\n  Difficulty: NORMAL\n  1-2: Garden Labyrinth\n  Progress: 6%", save1Texture), LoadSaveButton);
 		if (save1Result == AdvancedButtonResult.SimpleClick){
 			loadGame = "Save 1";
 		}
@@ -174,7 +178,7 @@ public class Title_GUI : Hex_GUI {
 			loadGame = "none";
 			Application.LoadLevel ("Main Menu");
 		}
-		AdvancedButtonResult save2Result = save2Button.Draw(new Rect(17, 225, 307, 95), new GUIContent("Save 2", save2Texture), LoadGameButton);
+		AdvancedButtonResult save2Result = save2Button.Draw(new Rect(21, 225, 307, 95), new GUIContent("  Jotaro\n  Difficulty: NORMAL\n  1-3: Castle Courtyard\n  Progress: 8%", save2Texture), LoadSaveButton);
 		if (save2Result == AdvancedButtonResult.SimpleClick){
 			loadGame = "Save 2";
 		}
@@ -182,7 +186,7 @@ public class Title_GUI : Hex_GUI {
 			loadGame = "none";
 			Application.LoadLevel ("Main Menu");
 		}
-		AdvancedButtonResult save3Result = save3Button.Draw(new Rect(17, 328, 307, 95), new GUIContent("Save 3", save3Texture), LoadGameButton);
+		AdvancedButtonResult save3Result = save3Button.Draw(new Rect(21, 328, 307, 95), new GUIContent("  Josuke\n  Difficulty: NORMAL\n  1-4: Great Keep\n  Progress: 11%", save3Texture), LoadSaveButton);
 		if (save3Result == AdvancedButtonResult.SimpleClick){
 			loadGame = "Save 3";
 		}
@@ -191,14 +195,14 @@ public class Title_GUI : Hex_GUI {
 			Application.LoadLevel ("Main Menu");
 		}
 		if (loadGame != "none"){
-			GUI.Label(new Rect(17, 432, 307, 30), "Do you want to load " + loadGame + "?", LoadLabel);
-			if (GUI.Button(new Rect(17, 470, 146, 51), "LOAD")){
+			GUI.Label(new Rect(21, 432, 307, 30), "Do you want to load " + loadGame + "?", LoadLabel);
+			if (GUI.Button(new Rect(21, 470, 146, 51), "LOAD")){
 				if (loadGame == "none")
 					print("No save file selected.");
 				else
 					Application.LoadLevel("Main Menu");
 			}
-			if (GUI.Button(new Rect(178, 470, 146, 51), "CANCEL")){
+			if (GUI.Button(new Rect(182, 470, 146, 51), "CANCEL")){
 				loadGame = "none";
 				load = false;
 			}
@@ -238,12 +242,12 @@ public class Title_GUI : Hex_GUI {
 
 	// General Settings
 	void GeneralItems(){
-		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "GENERAL");
+		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "GENERAL", HeaderLabel);
 	}
 
 	// Graphics Settings
 	void GraphicsItems(){
-		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "GRAPHICS");
+		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "GRAPHICS", HeaderLabel);
 		GUI.Label(new Rect(0.02813f*Screen.width, 0.08833f*Screen.height, 0.08125f*Screen.width, 0.035f*Screen.height), "Display");
 		GUI.Label(new Rect(0.04583f*Screen.width, 0.14833f*Screen.height, 0.06354f*Screen.width, 0.035f*Screen.height), "Resolution");
 		GUI.Label(new Rect(0.04583f*Screen.width, 0.20833f*Screen.height, 0.06354f*Screen.width, 0.035f*Screen.height), "Quality");
@@ -251,7 +255,7 @@ public class Title_GUI : Hex_GUI {
 
 	// Sound Settings
 	void SoundItems(){
-		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "SOUND");
+		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "SOUND", HeaderLabel);
 		GUI.Label(new Rect(0.02813f*Screen.width, 0.08833f*Screen.height, 0.08125f*Screen.width, 0.035f*Screen.height), "Volume");
 		GUI.Label(new Rect(0.04583f*Screen.width, 0.14833f*Screen.height, 0.06354f*Screen.width, 0.035f*Screen.height), "Master");
 		masterVolume = GUI.HorizontalSlider(new Rect(0.11667f*Screen.width, 0.14833f*Screen.height, 0.17188f*Screen.width, 0.035f*Screen.height), masterVolume, 0.0F, 10.0F);
@@ -263,7 +267,7 @@ public class Title_GUI : Hex_GUI {
 
 	// Control Settings
 	void ControlsItems(){
-		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "CONTROLS");
+		GUI.Label(new Rect(0.01042f*Screen.width, 0.01667f*Screen.height, 0.12708f*Screen.width, 0.04667f*Screen.height), "CONTROLS", HeaderLabel);
 		GUI.Label(new Rect(0.02813f*Screen.width, 0.08833f*Screen.height, 0.08125f*Screen.width, 0.035f*Screen.height), "Mouse");
 		GUI.Label(new Rect(0.04583f*Screen.width, 0.14833f*Screen.height, 0.06354f*Screen.width, 0.035f*Screen.height), "Sensitivity");
 		mouseSensitivity = GUI.HorizontalSlider(new Rect(0.11667f*Screen.width, 0.14833f*Screen.height, 0.17188f*Screen.width, 0.035f*Screen.height), mouseSensitivity, 0.0F, 10.0F);
