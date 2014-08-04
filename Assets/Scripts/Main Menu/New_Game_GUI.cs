@@ -6,11 +6,8 @@ using System;
 public class New_Game_GUI : Hex_GUI {
 
 	// GUI Skin and Styles
-<<<<<<< HEAD
 	public GUISkin TitleSkin;
-=======
 	public GUISkin NewGameSkin = (GUISkin)Resources.Load("Skins/NewGameSkin");
->>>>>>> origin/skins_and_styles
 	public GUIStyle DifficultyLabel;
 	public GUIStyle HeaderLabel;
 	public GUIStyle HardToggle;
@@ -42,15 +39,15 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Load Styles
 	protected override void LoadStyles(){
-		DifficultyLabel = TitleSkin.GetStyle("DifficultyLabel");
-		HeaderLabel = TitleSkin.GetStyle ("HeaderLabel");
-		HardToggle = TitleSkin.GetStyle ("HardToggle");
-		NormalToggle = TitleSkin.GetStyle ("NormalToggle");
-		EasyToggle = TitleSkin.GetStyle ("EasyToggle");
-		HardWindow = TitleSkin.GetStyle ("HardWindow");
-		NormalWindow = TitleSkin.GetStyle ("NormalWindow");
-		EasyWindow = TitleSkin.GetStyle ("EasyWindow");
-		OKButton = TitleSkin.GetStyle ("OKButton");
+		DifficultyLabel = NewGameSkin.GetStyle("DifficultyLabel");
+		HeaderLabel = NewGameSkin.GetStyle ("HeaderLabel");
+		HardToggle = NewGameSkin.GetStyle ("HardToggle");
+		NormalToggle = NewGameSkin.GetStyle ("NormalToggle");
+		EasyToggle = NewGameSkin.GetStyle ("EasyToggle");
+		HardWindow = NewGameSkin.GetStyle ("HardWindow");
+		NormalWindow = NewGameSkin.GetStyle ("NormalWindow");
+		EasyWindow = NewGameSkin.GetStyle ("EasyWindow");
+		OKButton = NewGameSkin.GetStyle ("OKButton");
 	}
 
 	// Run on GUI
