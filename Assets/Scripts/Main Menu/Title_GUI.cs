@@ -5,18 +5,17 @@ using System;
 
 public class Title_GUI : Hex_GUI {
 
-	// GUI Skin and Styles
-	public GUISkin TitleSkin = (GUISkin)Resources.Load("Skins/TitleSkin");
-	public GUIStyle MainMenuButton;
-	public GUIStyle LoadSaveButton;
-	public GUIStyle VersionLabel;
-	public GUIStyle LoadLabel;
-	public GUIStyle MainMenuWindow;
-	public GUIStyle MatteBox;
-	public GUIStyle LogoBox;
-	public GUIStyle LoadWindow;
-	public GUIStyle HeaderLabel;
-	public GUIStyle SettingsTabWindow;
+	// GUI Styles
+	private GUIStyle MainMenuButton;
+	private GUIStyle LoadSaveButton;
+	private GUIStyle VersionLabel;
+	private GUIStyle LoadLabel;
+	private GUIStyle MainMenuWindow;
+	private GUIStyle MatteBox;
+	private GUIStyle LogoBox;
+	private GUIStyle LoadWindow;
+	private GUIStyle HeaderLabel;
+	private GUIStyle SettingsTabWindow;
 
 	// Load Window Textures
 	public Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/save");
@@ -30,25 +29,6 @@ public class Title_GUI : Hex_GUI {
 	public Texture soundTexture = (Texture)Resources.Load("Textures/sound");
 	public Texture controlsTexture = (Texture)Resources.Load("Textures/controls");
 	
-	// Read .xml
-	XmlDocument xmlDoc = new XmlDocument();
-	//xmlDoc.LoadXml();
-
-/*
-	XmlElement node = xmlDoc.SelectNodes("logo");
-	float logo_left = float.Parse(node.SelectSingleNode("left").InnerText)*Screen.width;
-	float logo_top = float.Parse(node.SelectSingleNode("top").InnerText)*Screen.width;
-	float logo_width = float.Parse(node.SelectSingleNode("width").InnerText)*Screen.width;
-	float logo_height = float.Parse(node.SelectSingleNode("height").InnerText)*Screen.width;
-	float button_height = 0.15217f*mainMenu_height;
-
-	XmlElement node2 = xmlDoc.SelectNodes("main menu");
-	float mainMenu_left = float.Parse(node.SelectSingleNode("left").InnerText)*Screen.width;
-	float mainMenu_top = float.Parse(node.SelectSingleNode("top").InnerText)*Screen.width;
-	float mainMenu_width = float.Parse(node.SelectSingleNode("width").InnerText)*Screen.width;
-	float mainMenu_height = float.Parse(node.SelectSingleNode("height").InnerText)*Screen.width;
-*/
-
 	// Window Rectangles
 	Rect logoWindow = new Rect(702, 56, 258, 83);
 	Rect mainMenuWindow = new Rect(40, 30, 238, 184);
@@ -80,33 +60,25 @@ public class Title_GUI : Hex_GUI {
 
 	// Load Skin
 	protected override void LoadSkin(){
+		skin = (GUISkin)Resources.Load("Skins/TitleSkin");
 	}
 	
 	// Load Styles
 	protected override void LoadStyles(){
+		MainMenuButton = skin.GetStyle("MainMenuButton");
+		LoadSaveButton = skin.GetStyle("LoadSaveButton");
+		VersionLabel = skin.GetStyle("VersionLabel");
+		LoadLabel = skin.GetStyle("LoadLabel");
+		MainMenuWindow = skin.GetStyle("MainMenuWindow");
+		MatteBox = skin.GetStyle("MatteBox");
+		LogoBox = skin.GetStyle("LogoBox");
+		LoadWindow = skin.GetStyle("LoadWindow");
+		HeaderLabel = skin.GetStyle ("HeaderLabel");
+		SettingsTabWindow = skin.GetStyle ("SettingsTabWindow");
 	}
 
-	// Run on GUI
-	void OnGUI () {
-		GUI.skin = TitleSkin;
-
-		// Set matrix
-		Vector2 ratio = new Vector2(Screen.width/originalWidth , Screen.height/originalHeight );
-		Matrix4x4 guiMatrix = Matrix4x4.identity;
-		guiMatrix.SetTRS(new Vector3(1, 1, 1), Quaternion.identity, new Vector3(ratio.x, ratio.y, 1));
-		GUI.matrix = guiMatrix;
-
-		MainMenuButton = new GUIStyle(GUI.skin.GetStyle("MainMenuButton"));
-		LoadSaveButton = new GUIStyle(GUI.skin.GetStyle("LoadSaveButton"));
-		VersionLabel = new GUIStyle(GUI.skin.GetStyle("VersionLabel"));
-		LoadLabel = new GUIStyle(GUI.skin.GetStyle("LoadLabel"));
-		MainMenuWindow = new GUIStyle(GUI.skin.GetStyle("MainMenuWindow"));
-		MatteBox = new GUIStyle(GUI.skin.GetStyle("MatteBox"));
-		LogoBox = new GUIStyle(GUI.skin.GetStyle("LogoBox"));
-		LoadWindow = new GUIStyle(GUI.skin.GetStyle("LoadWindow"));
-		HeaderLabel = new GUIStyle (GUI.skin.GetStyle ("HeaderLabel"));;
-		SettingsTabWindow = new GUIStyle (GUI.skin.GetStyle ("SettingsTabWindow"));;
-
+	// Load GUI
+	protected override void LoadGUI(){
 		//MainMenuButton.fontSize = (int)(0.15217f*mainMenu_height)+20;
 		LoadSaveButton.fontSize = (int)(0.15833f*Screen.height)/6;
 		VersionLabel.fontSize = (int)(0.03667f*Screen.height)+8;
@@ -124,10 +96,8 @@ public class Title_GUI : Hex_GUI {
 		}
 		if (exit)
 			exitWindow = GUI.Window (6, exitWindow, ExitItems, "");
-
-		// Reset matrix
-		GUI.matrix = Matrix4x4.identity;
 	}
+
 	// Logo Window
 	void LogoItems(int windowID){
 		

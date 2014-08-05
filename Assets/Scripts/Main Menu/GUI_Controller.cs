@@ -8,7 +8,7 @@ public class GUI_Controller : MonoBehaviour {
 	private string currentGUI;
 
 	// ATTACH DEFAULT GUI ON START
-	void Start () {
+	void Start (){
 		string currentScene = Application.loadedLevelName;
 
 		switch (currentScene) {
