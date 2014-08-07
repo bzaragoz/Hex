@@ -6,28 +6,28 @@ using System;
 public class Title_GUI : Hex_GUI {
 
 	// GUI Styles
-	private GUIStyle MainMenuButton;
-	private GUIStyle LoadSaveButton;
-	private GUIStyle VersionLabel;
-	private GUIStyle LoadLabel;
-	private GUIStyle MainMenuWindow;
-	private GUIStyle MatteBox;
-	private GUIStyle LogoBox;
-	private GUIStyle LoadWindow;
-	private GUIStyle HeaderLabel;
-	private GUIStyle SettingsTabWindow;
+	private static GUIStyle MainMenuButton;
+	private static GUIStyle LoadSaveButton;
+	private static GUIStyle VersionLabel;
+	private static GUIStyle LoadLabel;
+	private static GUIStyle MainMenuWindow;
+	private static GUIStyle MatteBox;
+	private static GUIStyle LogoBox;
+	private static GUIStyle LoadWindow;
+	private static GUIStyle HeaderLabel;
+	private static GUIStyle SettingsTabWindow;
 
 	// Load Window Textures
-	public Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/save");
-	public Texture2D save1Texture = (Texture2D)Resources.Load ("Textures/save");
-	public Texture2D save2Texture = (Texture2D)Resources.Load ("Textures/save");
-	public Texture2D save3Texture = (Texture2D)Resources.Load ("Textures/save");
+	private Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/save");
+	private Texture2D save1Texture = (Texture2D)Resources.Load ("Textures/save");
+	private Texture2D save2Texture = (Texture2D)Resources.Load ("Textures/save");
+	private Texture2D save3Texture = (Texture2D)Resources.Load ("Textures/save");
 
 	// Settings Window Textures
-	public Texture generalTexture = (Texture)Resources.Load("Textures/general");
-	public Texture graphicsTexture = (Texture)Resources.Load("Textures/graphics");
-	public Texture soundTexture = (Texture)Resources.Load("Textures/sound");
-	public Texture controlsTexture = (Texture)Resources.Load("Textures/controls");
+	private Texture generalTexture = (Texture)Resources.Load("Textures/general");
+	private Texture graphicsTexture = (Texture)Resources.Load("Textures/graphics");
+	private Texture soundTexture = (Texture)Resources.Load("Textures/sound");
+	private Texture controlsTexture = (Texture)Resources.Load("Textures/controls");
 	
 	// Window Rectangles
 	Rect logoWindow = new Rect(702, 56, 258, 83);

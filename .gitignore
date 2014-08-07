@@ -52,6 +52,7 @@ Icon
 [Oo]bj/
 [Tt]emp/
 [Ll]ibrary/
+[Bb]uilds/
 *.tmproj
 *.csproj
 *.unityproj
