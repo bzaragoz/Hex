@@ -16,12 +16,13 @@ public class Title_GUI : Hex_GUI {
 	private static GUIStyle LoadWindow;
 	private static GUIStyle HeaderLabel;
 	private static GUIStyle SettingsTabWindow;
+	private static GUIStyle LoadButton;
 
 	// Load Window Textures
-	private Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/save");
-	private Texture2D save1Texture = (Texture2D)Resources.Load ("Textures/save");
-	private Texture2D save2Texture = (Texture2D)Resources.Load ("Textures/save");
-	private Texture2D save3Texture = (Texture2D)Resources.Load ("Textures/save");
+	private Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/autosave");
+	private Texture2D save1Texture = (Texture2D)Resources.Load ("Textures/save1");
+	private Texture2D save2Texture = (Texture2D)Resources.Load ("Textures/save2");
+	private Texture2D save3Texture = (Texture2D)Resources.Load ("Textures/save3");
 
 	// Settings Window Textures
 	private Texture generalTexture = (Texture)Resources.Load("Textures/general");
@@ -75,6 +76,7 @@ public class Title_GUI : Hex_GUI {
 		LoadWindow = skin.GetStyle("LoadWindow");
 		HeaderLabel = skin.GetStyle ("HeaderLabel");
 		SettingsTabWindow = skin.GetStyle ("SettingsTabWindow");
+		LoadButton = skin.GetStyle ("LoadButton");
 	}
 
 	// Load GUI
@@ -132,7 +134,7 @@ public class Title_GUI : Hex_GUI {
 
 	// Load Game
 	void LoadGameItems(int windowID){
-		AdvancedButtonResult autosaveResult = autosaveButton.Draw(new Rect(21, 18, 307, 95), new GUIContent("  Jonathan\n  Difficulty: NORMAL\n  1-1: The Gatehouse\n  Progress: 3%", autosaveTexture), LoadSaveButton);
+		AdvancedButtonResult autosaveResult = autosaveButton.Draw(new Rect(21, 18, 307, 95), new GUIContent("  Jonathan\n  NORMAL\n  The Gatehouse\n  Progress: 3%", autosaveTexture), LoadSaveButton);
 		if (autosaveResult == AdvancedButtonResult.SimpleClick) {
 			loadGame = "Autosave";
 		}
@@ -140,7 +142,7 @@ public class Title_GUI : Hex_GUI {
 			loadGame = "none";
 			Application.LoadLevel ("Main Menu");
 		}
-		AdvancedButtonResult save1Result = save1Button.Draw(new Rect(21, 121, 307, 95), new GUIContent("  Joseph\n  Difficulty: NORMAL\n  1-2: Garden Labyrinth\n  Progress: 6%", save1Texture), LoadSaveButton);
+		AdvancedButtonResult save1Result = save1Button.Draw(new Rect(21, 121, 307, 95), new GUIContent("  Joseph\n  NORMAL\n  Garden Labyrinth\n  Progress: 6%", save1Texture), LoadSaveButton);
 		if (save1Result == AdvancedButtonResult.SimpleClick){
 			loadGame = "Save 1";
 		}
@@ -148,7 +150,7 @@ public class Title_GUI : Hex_GUI {
 			loadGame = "none";
 			Application.LoadLevel ("Main Menu");
 		}
-		AdvancedButtonResult save2Result = save2Button.Draw(new Rect(21, 225, 307, 95), new GUIContent("  Jotaro\n  Difficulty: NORMAL\n  1-3: Castle Courtyard\n  Progress: 8%", save2Texture), LoadSaveButton);
+		AdvancedButtonResult save2Result = save2Button.Draw(new Rect(21, 225, 307, 95), new GUIContent("  Jotaro\n  NORMAL\n  Castle Courtyard\n  Progress: 8%", save2Texture), LoadSaveButton);
 		if (save2Result == AdvancedButtonResult.SimpleClick){
 			loadGame = "Save 2";
 		}
@@ -156,7 +158,7 @@ public class Title_GUI : Hex_GUI {
 			loadGame = "none";
 			Application.LoadLevel ("Main Menu");
 		}
-		AdvancedButtonResult save3Result = save3Button.Draw(new Rect(21, 328, 307, 95), new GUIContent("  Josuke\n  Difficulty: NORMAL\n  1-4: Great Keep\n  Progress: 11%", save3Texture), LoadSaveButton);
+		AdvancedButtonResult save3Result = save3Button.Draw(new Rect(21, 328, 307, 95), new GUIContent("  Josuke\n  NORMAL\n  Great Keep\n  Progress: 11%", save3Texture), LoadSaveButton);
 		if (save3Result == AdvancedButtonResult.SimpleClick){
 			loadGame = "Save 3";
 		}
@@ -164,18 +166,22 @@ public class Title_GUI : Hex_GUI {
 			loadGame = "none";
 			Application.LoadLevel ("Main Menu");
 		}
+		GUI.Label(new Rect (25, 96, 100, 20), "AUTO");
+		GUI.Label(new Rect (25, 199, 100, 20), "SAVE 1");
+		GUI.Label(new Rect (25, 303, 100, 20), "SAVE 2");
+		GUI.Label(new Rect (25, 406, 100, 20), "SAVE 3");
 		if (loadGame != "none"){
-			GUI.Label(new Rect(21, 432, 307, 30), "Do you want to load " + loadGame + "?", LoadLabel);
-			if (GUI.Button(new Rect(21, 470, 146, 51), "LOAD")){
+			GUI.Label(new Rect(21, 420, 307, 30), "Do you want to load " + loadGame + "?", LoadLabel);
+			if (GUI.Button(new Rect(21, 470, 146, 51), "LOAD", LoadButton)){
 				if (loadGame == "none")
 					print("No save file selected.");
 				else
 					Application.LoadLevel("Main Menu");
 			}
-			if (GUI.Button(new Rect(182, 470, 146, 51), "CANCEL")){
-				loadGame = "none";
-				load = false;
-			}
+		}
+		if (GUI.Button(new Rect(182, 470, 146, 51), "CANCEL")){
+			loadGame = "none";
+			load = false;
 		}
 	}
 
