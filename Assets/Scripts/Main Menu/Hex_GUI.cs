@@ -33,6 +33,8 @@ public abstract class Hex_GUI : MonoBehaviour {
 		GUI.matrix = guiMatrix;
 	}
 
+	protected void NoItems(int windowID){;}
+
 	// Abstract
 	protected abstract void LoadSkin();
 	protected abstract void LoadStyles();
