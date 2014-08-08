@@ -58,6 +58,10 @@ public class Title_GUI : Hex_GUI {
 	public float effectsVolume = 5.0F;
 	public float mouseSensitivity = 5.0F;
 
+	private void Awake(){
+		guiAlpha = 1.0f;
+	}
+
 	// Load Skin
 	protected override void LoadSkin(){
 		skin = (GUISkin)Resources.Load("Skins/TitleSkin");

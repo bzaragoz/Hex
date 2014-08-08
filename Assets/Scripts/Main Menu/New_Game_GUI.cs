@@ -25,6 +25,8 @@ public class New_Game_GUI : Hex_GUI {
 	// Awake
 	private void Awake(){
 		LoadDifficulties();
+		guiAlpha = 0.0f;
+		StartCoroutine(FadeInGUI(0.0f, 1.0f, 1.0f, 0.0f));
 	}
 
 	// Load Difficulties
@@ -82,6 +84,7 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Create Difficulty Window
 	private void CreateDifficultyWindow(int windowID){
+		GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, guiAlpha);
 		CreateHeaderLabel();
 		CreateDifficultyToggles();
 		CreateDescription();
@@ -128,7 +131,8 @@ public class New_Game_GUI : Hex_GUI {
 	// Create Cancel Button
 	private void CreateCancelButton(){
 		if (GUI.Button(new Rect(684, 427, 184, 47), "CANCEL")){
-			guiController.ReplaceGUI("Title_GUI");
+			StartCoroutine(FadeOutGUI(1.0f, 0.0f, 0.5f));
+			StartCoroutine(guiController.SwitchGUI("Title_GUI", 0.5f));
 		}
 	}
 }

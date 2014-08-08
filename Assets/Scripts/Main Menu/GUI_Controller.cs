@@ -28,4 +28,11 @@ public class GUI_Controller : MonoBehaviour {
 		Destroy(this.GetComponent(currentGUI));
 		AttachGUI(scriptName);
 	}
+
+	// SWITCH GUI
+	public IEnumerator SwitchGUI(string scriptName, float waitTime){
+		yield return new WaitForSeconds(waitTime);
+		Destroy(this.GetComponent(currentGUI));
+		AttachGUI(scriptName);
+	}
 }
