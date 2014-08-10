@@ -4,7 +4,7 @@ using System.Collections;
 public abstract class Hex_GUI : MonoBehaviour {
 
 	protected GUI_Controller guiController;
-	protected MenuCam_Controller camController;
+	protected Camera_Controller camController;
 
 	protected static float originalWidth = 960.0f;
 	protected static float originalHeight = 600.0f;
@@ -15,7 +15,7 @@ public abstract class Hex_GUI : MonoBehaviour {
 	// Start
 	protected void Start(){
 		guiController = GameObject.Find ("GUI").GetComponent<GUI_Controller>();
-		camController = GameObject.Find ("Main Camera").GetComponent<MenuCam_Controller>();
+		camController = GameObject.Find ("Main Camera").GetComponent<Camera_Controller>();
 		LoadSkin();
 		LoadStyles();
 	}
