@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 using System;
 
@@ -17,6 +18,12 @@ public class Title_GUI : Hex_GUI {
 	private static GUIStyle HeaderLabel;
 	private static GUIStyle SettingsTabWindow;
 	private static GUIStyle LoadButton;
+	private static GUIStyle MainMenuToggle;
+	private static GUIStyle SaveLabel;
+	private static GUIStyle GeneralButton;
+	private static GUIStyle GraphicsButton;
+	private static GUIStyle SoundButton;
+	private static GUIStyle ControlsButton;
 
 	// Load-Window Textures
 	private static Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/autosave");
@@ -32,16 +39,15 @@ public class Title_GUI : Hex_GUI {
 	// Window Rectangles
 	static Rect logoWindow = new Rect(702, 56, 258, 83);
 	static Rect mainMenuWindow = new Rect(40, 30, 238, 184);
-	static Rect versionWindow = new Rect(742, 529, 165, 10); 
+	static Rect versionWindow = new Rect(742, 529, 165, 20); 
 	static Rect loadGameWindow = new Rect(619, 30, 341, 542);
 	static Rect settingsTabWindow = new Rect(619, 30, 50, 200);
 	static Rect settingsWindow = new Rect(669, 30, 291, 542);
 	static Rect exitWindow = new Rect((Screen.width/2)-(0.24792f*Screen.width/2), (Screen.height/2)-(0.17833f*Screen.height/2), 0.24792f*Screen.width, 0.17833f*Screen.height);
 
 	// Window Booleans
-	bool load = false;
-	bool settings = false;
-	bool exit = false;
+	private Dictionary<string, bool> mainMenuBool = new Dictionary<string, bool>();
+	private string mainMenuSelection = "NONE";
 
 	// String Variables
 	string loadGame = "none";
@@ -59,7 +65,32 @@ public class Title_GUI : Hex_GUI {
 	public float mouseSensitivity = 5.0F;
 
 	private void Awake(){
+		LoadMainMenu();
 		guiAlpha = 1.0f;
+	}
+
+	// Load Main Menu
+	private void LoadMainMenu(){
+		mainMenuBool.Add("LOAD GAME", false);
+		mainMenuBool.Add("SETTINGS", false);
+		mainMenuBool.Add("EXIT", false);
+	}
+	
+	// Set Main Menu
+	private void SetMainMenu(string mainMenuSelection){
+		List<string> keys = new List<string>(mainMenuBool.Keys);
+		
+		foreach(string key in keys){
+			if (key == mainMenuSelection){
+				if (mainMenuBool[key] == false)
+					mainMenuBool[key] = true;
+				else
+					mainMenuBool[key] = false;
+			}
+			else
+				mainMenuBool[key] = false;
+			this.mainMenuSelection = mainMenuSelection;
+		}
 	}
 
 	// Load Skin
@@ -80,6 +111,12 @@ public class Title_GUI : Hex_GUI {
 		HeaderLabel = skin.GetStyle ("HeaderLabel");
 		SettingsTabWindow = skin.GetStyle ("SettingsTabWindow");
 		LoadButton = skin.GetStyle ("LoadButton");
+		MainMenuToggle = skin.GetStyle("MainMenuToggle");
+		SaveLabel = skin.GetStyle("SaveLabel");
+		GeneralButton = skin.GetStyle("GeneralButton");
+		GraphicsButton = skin.GetStyle("GraphicsButton");
+		SoundButton = skin.GetStyle("SoundButton");
+		ControlsButton = skin.GetStyle("ControlsButton");
 	}
 
 	// Load GUI
@@ -90,11 +127,11 @@ public class Title_GUI : Hex_GUI {
 		LoadVersionWindow();
 		CreateMatteBox(0.0f, 572.0f, 960.0f, 30.0f);
 
-		if (load)
+		if (mainMenuBool["LOAD GAME"])
 			LoadLoadWindow();
-		if (settings)
+		if (mainMenuBool["SETTINGS"])
 			LoadSettingsWindow();
-		if (exit)
+		if (mainMenuBool["EXIT"])
 			LoadExitWindow();
 	}
 
@@ -139,26 +176,28 @@ public class Title_GUI : Hex_GUI {
 		if (GUI.Button(new Rect(2, 24, 236, 31), "NEW GAME", MainMenuButton) || Input.GetKeyDown(KeyCode.N)){
 			guiController.ReplaceGUI("New_Game_GUI");
 		}
-		if (GUI.Button(new Rect(2, 55, 236, 31), "LOAD GAME", MainMenuButton) || Input.GetKeyDown(KeyCode.L)){
-			resetWindows();
-			load = true;
-		}
-		if (GUI.Button(new Rect(2, 86, 236, 31), "SETTINGS", MainMenuButton) || Input.GetKeyDown(KeyCode.S)){
-			resetWindows();
-			settings = true;
-		}
 		if (GUI.Button(new Rect(2, 117, 236, 31), "CREDITS", MainMenuButton)){
 			print("Opening Credits...");
 		}
-		if (GUI.Button(new Rect(2, 148, 236, 31), "EXIT", MainMenuButton) || Input.GetKeyDown(KeyCode.E)){
-			resetWindows();
-			exit = true;
-		}
+		CreateMainMenuToggles();
 	}
 
+	// Create Main Menu Toggles
+	private void CreateMainMenuToggles(){
+		CreateMainMenuToggle(new Rect(2, 55, 236, 31), "LOAD GAME");
+		CreateMainMenuToggle(new Rect(2, 86, 236, 31), "SETTINGS");
+		CreateMainMenuToggle(new Rect(2, 148, 236, 31), "EXIT");
+	}
+
+	// Create Main Menu Toggle
+	private void CreateMainMenuToggle(Rect newRect, string mainMenuSelection){
+		if (GUI.Toggle(newRect, mainMenuBool[mainMenuSelection], mainMenuSelection, MainMenuToggle) != mainMenuBool[mainMenuSelection])
+			SetMainMenu(mainMenuSelection);
+	}
+	
 	// Create Version Window
 	void CreateVersionWindow(int windowID){
-		GUI.Label(new Rect(0, 0, 0.17188f*Screen.width, 0.03667f*Screen.height), "Version: Prototype", VersionLabel);
+		GUI.Label(new Rect(0, 0, 165, 20), "VERSION: PROTOTYPE", VersionLabel);
 	}
 
 	// Create Load Window
@@ -179,8 +218,9 @@ public class Title_GUI : Hex_GUI {
 		                 new Rect(21, 328, 307, 95),
 		                 new GUIContent("  Josuke\n  NORMAL\n  Great Keep\n  Progress: 11%", save3Texture),
 		                 ref LoadSaveButton, "Save 3", "Main Menu");
-
 		CreateLabels();
+		if (loadGame != "none")
+			GUI.Label(new Rect(21, 430, 307, 30), "Load " + loadGame + "?", LoadLabel);
 		CreateLoadButton();
 		CreateCancelButton();
 	}
@@ -201,42 +241,39 @@ public class Title_GUI : Hex_GUI {
 
 	// Create Save Labels
 	private void CreateLabels(){
-		GUI.Label(new Rect (25, 96, 100, 20), "AUTO");
-		GUI.Label(new Rect (25, 199, 100, 20), "SAVE 1");
-		GUI.Label(new Rect (25, 303, 100, 20), "SAVE 2");
-		GUI.Label(new Rect (25, 406, 100, 20), "SAVE 3");
+		GUI.Label(new Rect (25, 96, 100, 20), "AUTO", SaveLabel);
+		GUI.Label(new Rect (25, 199, 100, 20), "SAVE 1", SaveLabel);
+		GUI.Label(new Rect (25, 303, 100, 20), "SAVE 2", SaveLabel);
+		GUI.Label(new Rect (25, 406, 100, 20), "SAVE 3", SaveLabel);
 	}
 
 	// Create Load Button
 	private void CreateLoadButton(){
-		if (loadGame != "none"){
-			GUI.Label(new Rect(21, 420, 307, 30), "Do you want to load " + loadGame + "?", LoadLabel);
-			if (GUI.Button(new Rect(21, 470, 146, 51), "LOAD", LoadButton)){
-				if (loadGame == "none")
-					print("No save file selected.");
-				else
-					Application.LoadLevel("Main Menu");
-			}
-		}		
+		if (GUI.Button(new Rect(21, 470, 146, 51), "LOAD", LoadButton)){
+			if (loadGame == "none")
+				GUI.Label(new Rect(21, 430, 307, 30), "Save file not selected.", LoadLabel);
+			else
+				Application.LoadLevel("Main Menu");
+		}
 	}
 
 	// Create Cancel Button
 	private void CreateCancelButton(){
-		if (GUI.Button(new Rect(182, 470, 146, 51), "CANCEL")){
+		if (GUI.Button(new Rect(182, 470, 146, 51), "CANCEL", LoadButton)){
 			loadGame = "none";
-			load = false;
+			mainMenuBool["LOAD GAME"] = false;
 		}
 	}
 
 	// Create Tabs Window
 	void CreateTabsWindow(int windowID){
-		if (GUI.Button(new Rect(0, 0, 50, 50), generalTexture))
+		if (GUI.Button(new Rect(0, 0, 50, 50), "", GeneralButton))
 			settingsTab = "general";
-		if (GUI.Button (new Rect (0, 50, 50, 50), graphicsTexture))
+		if (GUI.Button (new Rect (0, 50, 50, 50), "", GraphicsButton))
 			settingsTab = "graphics";
-		if (GUI.Button(new Rect(0, 100, 50, 50), soundTexture))
+		if (GUI.Button(new Rect(0, 100, 50, 50), "", SoundButton))
 			settingsTab = "sound";
-		if (GUI.Button(new Rect(0, 150, 50, 50), controlsTexture))
+		if (GUI.Button(new Rect(0, 150, 50, 50), "", ControlsButton))
 			settingsTab = "controls";
 	}
 
@@ -251,11 +288,11 @@ public class Title_GUI : Hex_GUI {
 		else if (settingsTab == "controls")
 			ControlsItems();
 		if (GUI.Button(new Rect(10, 493, 131, 39), "APPLY")){
-			settings = false;
+			mainMenuBool["SETTINGS"] = false;
 		}
 		if (GUI.Button(new Rect(150, 493, 131, 39), "CANCEL")){
 			settingsTab = "general";
-			settings = false;
+			mainMenuBool["SETTINGS"] = false;
 		}
 	}
 
@@ -299,14 +336,7 @@ public class Title_GUI : Hex_GUI {
 			Application.Quit();
 		}
 		if (GUI.Button(new Rect(0.13021f*Screen.width, 0.105f*Screen.height, 0.10625f*Screen.width, 0.05667f*Screen.height), "CANCEL")){
-			exit = false;
+			mainMenuBool["EXIT"] = false;
 		}
-	}
-
-	// Reset Window Booleans
-	void resetWindows(){
-		load = false;
-		settings = false;
-		exit = false;
 	}
 }
