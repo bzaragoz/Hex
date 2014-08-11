@@ -23,7 +23,7 @@ public class Camera_Controller : MonoBehaviour {
 	}
 	
 	// Replace camera
-	public void ReplaceGUI(string scriptName){
+	public void ReplaceCamera(string scriptName){
 		Destroy(this.GetComponent(currentCamera));
 		AttachCamera(scriptName);
 	}
