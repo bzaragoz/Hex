@@ -27,7 +27,7 @@ public class Title_GUI : Hex_GUI {
 
 	// Load-Window Textures
 	private static Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/autosave");
-	private static Texture2D save1Texture = (Texture2D)Resources.Load ("Textures/save2");
+	private static Texture2D save1Texture = (Texture2D)Resources.Load ("Textures/save1");
 	private static Texture2D save2Texture = (Texture2D)Resources.Load ("Textures/save2");
 	private static Texture2D save3Texture = (Texture2D)Resources.Load ("Textures/save3");
 	// Settings Window Textures
