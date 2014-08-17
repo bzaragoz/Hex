@@ -270,6 +270,7 @@ public class Title_GUI : Hex_GUI {
 	void CreateMainWindow(int windowID){
 		if (GUI.Button(new Rect(2, 24, 236, 31), "NEW GAME", MainMenuButton) || Input.GetKeyDown(KeyCode.N)){
 			guiController.ReplaceGUI("New_Game_GUI");
+			camController.ReplaceCamera("New_Game_Camera");
 		}
 		if (GUI.Button(new Rect(2, 117, 236, 31), "CREDITS", MainMenuButton)){
 			print("Opening Credits...");
