@@ -26,7 +26,7 @@ public class New_Game_GUI : Hex_GUI {
 	private void Awake(){
 		LoadDifficulties();
 		guiAlpha = 0.0f;
-		StartCoroutine(FadeInGUI(0.0f, 1.0f, 1.0f, 0.0f));
+		StartCoroutine(FadeInGUI(0.0f, 1.0f, 1.0f, 1.5f));
 	}
 
 	// Load Difficulties
