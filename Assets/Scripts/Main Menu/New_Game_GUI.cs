@@ -22,10 +22,19 @@ public class New_Game_GUI : Hex_GUI {
 	private Dictionary<string, bool> difficultyBool = new Dictionary<string, bool>();
 	private string difficulty = "normal";
 
+	// Audio
+	private static AudioSource menuSelect;
+	private static AudioSource menuHover;
+	private string lastTooltip = "";
+
 	// Awake
 	private void Awake(){
 		LoadDifficulties();
 		guiAlpha = 0.0f;
+		menuSelect = gameObject.AddComponent<AudioSource>();
+		menuSelect.clip = Resources.Load("Music/Difficulty Select") as AudioClip;
+		menuHover = gameObject.AddComponent<AudioSource>();
+		menuHover.clip = Resources.Load("Music/Difficulty Hover") as AudioClip;
 		StartCoroutine(FadeInGUI(0.0f, 1.0f, 1.0f, 1.5f));
 	}
 
@@ -90,6 +99,15 @@ public class New_Game_GUI : Hex_GUI {
 		CreateDescription();
 		CreateOKButton();
 		CreateCancelButton();
+
+		if (Event.current.type == EventType.Repaint && GUI.tooltip != lastTooltip) {
+			if (lastTooltip != "")
+				SendMessage("OnMouseOut", SendMessageOptions.DontRequireReceiver);
+			if (GUI.tooltip != "")
+				SendMessage("OnMouseOver", SendMessageOptions.DontRequireReceiver);
+			
+			lastTooltip = GUI.tooltip;
+		}
 	}
 
 	// Create Header Label
@@ -106,8 +124,18 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Create Difficulty Toggle
 	private void CreateDifficultyToggle(Rect newRect, ref GUIStyle difficultyToggle, string difficulty){
-		if (GUI.Toggle(newRect, difficultyBool[difficulty], "", difficultyToggle) != difficultyBool[difficulty])
-			SetDifficulty(difficulty);
+		if (GUI.Toggle (newRect, difficultyBool[difficulty], new GUIContent("", difficulty), difficultyToggle) != difficultyBool[difficulty]) {
+			SetDifficulty (difficulty);
+			menuSelect.Play();
+		}
+	}
+
+	private void OnMouseOver(){
+		menuHover.Play();
+	}
+
+	private void OnMouseOut(){
+
 	}
 
 	// Create Description

@@ -7,3 +7,10 @@ Credits
 2) Author: ian mac
    Source: Space Skybox
    Link: http://forum.unity3d.com/threads/space-skybox.99258/
+
+3) Author: broumbroum
+   Source: Menu-Select L and R
+   Link: https://www.freesound.org/people/broumbroum/sounds/50559/
+	 https://www.freesound.org/people/broumbroum/sounds/50560/
+	 http://www.freesound.org/people/broumbroum/sounds/50556/
+	 http://www.freesound.org/people/broumbroum/sounds/50555/
