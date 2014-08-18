@@ -19,6 +19,8 @@ public class Title_GUI : Hex_GUI {
 	private ComboBox shadowQualityControl = new ComboBox();
 	GUIContent[] shaderQualityList;
 	private ComboBox shaderQualityControl = new ComboBox();
+	GUIContent[] textLanguageList;
+	private ComboBox textLanguageControl = new ComboBox();
 
 	// GUI Styles
 	private static GUIStyle MainMenuButton;
@@ -85,6 +87,7 @@ public class Title_GUI : Hex_GUI {
 	public float uiVolume = 5.0F;
 	public float qualityVolume = 5.0F;
 	public float mouseSensitivity = 5.0F;
+	public float damageTextSize = 5.0F;
 
 	private void Awake(){
 		LoadMainMenu();
@@ -138,6 +141,10 @@ public class Title_GUI : Hex_GUI {
 		shaderQualityList[1] = new GUIContent("Medium");
 		shaderQualityList[2] = new GUIContent("High");
 		shaderQualityControl.SetSelectedItemIndex(1);
+
+		textLanguageList = new GUIContent[1];
+		textLanguageList[0] = new GUIContent ("English");
+		shaderQualityControl.SetSelectedItemIndex(0);
 	}
 
 	// Load Main Menu
@@ -390,9 +397,7 @@ public class Title_GUI : Hex_GUI {
 			SoundItems();
 		else if (settingsBool["CONTROLS"])
 			ControlsItems();
-		GUI.Button(new Rect(10, 431, 131, 39), "DEFAULT", LoadButton);
-		GUI.Button(new Rect(150, 431, 131, 39), "RESET", LoadButton);
-		if (GUI.Button(new Rect(10, 482, 131, 39), "APPLY", LoadButton)){ //493
+		if (GUI.Button(new Rect(10, 482, 131, 39), "AUTO", LoadButton)){ //493
 			mainMenuBool["SETTINGS"] = false;
 		}
 		if (GUI.Button(new Rect(150, 482, 131, 39), "CANCEL", LoadButton)){ //493
@@ -404,6 +409,19 @@ public class Title_GUI : Hex_GUI {
 	// General Settings
 	void GeneralItems(){
 		GUI.Label(new Rect(10, 10, 153, 25), "GENERAL", HeaderLabel);
+		GUI.Label(new Rect(26, 49, 120, 20), "INTERFACE");
+		GUI.Label(new Rect(42, 78, 120, 20), "Text Language");
+		GUI.Label(new Rect(42, 118, 160, 20), "Damage Text Size");
+		GUI.Label(new Rect(42, 177, 160, 20), "Disable mousewalking");
+		GUI.Label(new Rect(42, 197, 180, 20), "Inverted camera control");
+		GUI.Label(new Rect(42, 217, 200, 20), "Always show nearby names");
+
+		GUI.Toggle(new Rect (26, 177, 20, 20), false, "");
+		GUI.Toggle(new Rect (26, 197, 20, 20), false, "");
+		GUI.Toggle(new Rect (26, 217, 20, 20), false, "");
+		damageTextSize = GUI.HorizontalSlider(new Rect(58, 138, 200, 20), damageTextSize, 0.0F, 10.0F);
+		int textLanguageIndex = textLanguageControl.GetSelectedItemIndex();
+		textLanguageIndex = textLanguageControl.List(new Rect(58, 98, 200, 20), textLanguageList[textLanguageIndex].text, textLanguageList, DropDownButton, DropDownMenu, DropDownMenu);
 	}
 
 	// Graphics Settings
@@ -440,17 +458,19 @@ public class Title_GUI : Hex_GUI {
 		GUI.Label(new Rect(10, 10, 153, 25), "SOUND", HeaderLabel);
 		GUI.Label(new Rect(26, 49, 120, 20), "QUALITY");
 		qualityVolume = GUI.HorizontalSlider(new Rect(58, 78, 200, 20), qualityVolume, 0.0F, 10.0F);
-		GUI.Label(new Rect(26, 117, 120, 20), "VOLUME");
-		GUI.Label(new Rect(42, 146, 120, 20), "Master Volume");
-		masterVolume = GUI.HorizontalSlider(new Rect(58, 166, 200, 20), masterVolume, 0.0F, 10.0F);
-		GUI.Label(new Rect(42, 186, 120, 20), "Background");
-		backgroundVolume = GUI.HorizontalSlider(new Rect(58, 206, 200, 20), backgroundVolume, 0.0F, 10.0F);
-		GUI.Label(new Rect(42, 226, 120, 20), "Effects");
-		effectsVolume = GUI.HorizontalSlider(new Rect(58, 246, 200, 20), effectsVolume, 0.0F, 10.0F);
-		GUI.Label(new Rect(42, 266, 120, 20), "Dialog");
-		dialogVolume = GUI.HorizontalSlider(new Rect(58, 286, 200, 20), dialogVolume, 0.0F, 10.0F);
-		GUI.Label(new Rect(42, 306, 120, 20), "UI");
-		uiVolume = GUI.HorizontalSlider(new Rect(58, 326, 200, 20), uiVolume, 0.0F, 10.0F);
+		GUI.Label(new Rect(26, 108, 120, 20), "VOLUME");
+		GUI.Label(new Rect(42, 137, 120, 20), "Master Volume");
+		masterVolume = GUI.HorizontalSlider(new Rect(58, 157, 200, 20), masterVolume, 0.0F, 10.0F);
+		GUI.Label(new Rect(42, 177, 120, 20), "Background");
+		backgroundVolume = GUI.HorizontalSlider(new Rect(58, 197, 200, 20), backgroundVolume, 0.0F, 10.0F);
+		GUI.Label(new Rect(42, 217, 120, 20), "Effects");
+		effectsVolume = GUI.HorizontalSlider(new Rect(58, 237, 200, 20), effectsVolume, 0.0F, 10.0F);
+		GUI.Label(new Rect(42, 257, 120, 20), "Dialog");
+		dialogVolume = GUI.HorizontalSlider(new Rect(58, 277, 200, 20), dialogVolume, 0.0F, 10.0F);
+		GUI.Label(new Rect(42, 297, 120, 20), "UI");
+		uiVolume = GUI.HorizontalSlider(new Rect(58, 317, 200, 20), uiVolume, 0.0F, 10.0F);
+		GUI.Toggle(new Rect (26, 356, 20, 20), false, "");
+		GUI.Label(new Rect(42, 356, 200, 20), "Mute when in background");
 	}
 
 	// Control Settings
@@ -458,6 +478,21 @@ public class Title_GUI : Hex_GUI {
 		GUI.Label(new Rect(10, 10, 153, 25), "CONTROLS", HeaderLabel);
 		GUI.Label(new Rect(26, 49, 120, 20), "MOUSE");
 		GUI.Label(new Rect(42, 78, 120, 20), "Sensitivity");
+		GUI.Label(new Rect(26, 137, 120, 20), "KEYBINDS");
+		GUI.Label(new Rect(42, 166, 100, 20), "Up");
+		GUI.Label(new Rect(42, 186, 100, 20), "Left");
+		GUI.Label(new Rect(42, 206, 100, 20), "Down");
+		GUI.Label(new Rect(42, 226, 100, 20), "Right");
+		GUI.Label(new Rect(42, 246, 100, 20), "Interact");
+		GUI.Label(new Rect(42, 266, 100, 20), "Attack");
+		GUI.Label(new Rect(42, 286, 100, 20), "Special Attack");
+		GUI.Label(new Rect(42, 306, 100, 20), "Melee Weapon");
+		GUI.Label(new Rect(42, 326, 100, 20), "Ranged Weapon");
+		GUI.Label(new Rect(42, 346, 100, 20), "Magic");
+		GUI.Label(new Rect(42, 366, 100, 20), "Item 1");
+		GUI.Label(new Rect(42, 386, 100, 20), "Item 2");
+		GUI.Label(new Rect(42, 406, 100, 20), "Block");
+
 		mouseSensitivity = GUI.HorizontalSlider(new Rect(58, 98, 200, 20), mouseSensitivity, 0.0F, 10.0F);
 	}
 
