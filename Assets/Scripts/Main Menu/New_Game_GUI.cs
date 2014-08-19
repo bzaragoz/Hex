@@ -22,19 +22,17 @@ public class New_Game_GUI : Hex_GUI {
 	private Dictionary<string, bool> difficultyBool = new Dictionary<string, bool>();
 	private string difficulty = "normal";
 
-	// Audio
+	// Audio Sources
 	private static AudioSource menuSelect;
 	private static AudioSource menuHover;
+	private static AudioSource cancelSelect;
 	private string lastTooltip = "";
 
 	// Awake
 	private void Awake(){
 		LoadDifficulties();
+		LoadAudioSources();
 		guiAlpha = 0.0f;
-		menuSelect = gameObject.AddComponent<AudioSource>();
-		menuSelect.clip = Resources.Load("Music/Difficulty Select") as AudioClip;
-		menuHover = gameObject.AddComponent<AudioSource>();
-		menuHover.clip = Resources.Load("Music/Difficulty Hover") as AudioClip;
 		StartCoroutine(FadeInGUI(0.0f, 1.0f, 1.0f, 1.5f));
 	}
 
@@ -43,6 +41,16 @@ public class New_Game_GUI : Hex_GUI {
 		difficultyBool.Add("easy", false);
 		difficultyBool.Add("normal", true);
 		difficultyBool.Add("hard", false);
+	}
+
+	// Load Audio Sources
+	private void LoadAudioSources(){
+		menuSelect = gameObject.AddComponent<AudioSource>();
+		menuHover = gameObject.AddComponent<AudioSource>();
+		cancelSelect = gameObject.AddComponent<AudioSource>();
+		menuSelect.clip = Resources.Load("Music/Difficulty Select") as AudioClip;
+		menuHover.clip = Resources.Load("Music/Difficulty Hover") as AudioClip;
+		cancelSelect.clip = Resources.Load("Music/Cancel Select") as AudioClip;
 	}
 
 	// Set Difficulty
@@ -93,6 +101,10 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Create Difficulty Window
 	private void CreateDifficultyWindow(int windowID){
+		if (guiAlpha != 1.0f)
+			GUI.enabled = false;
+		else
+			GUI.enabled = true;
 		GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, guiAlpha);
 		CreateHeaderLabel();
 		CreateDifficultyToggles();
@@ -100,7 +112,7 @@ public class New_Game_GUI : Hex_GUI {
 		CreateOKButton();
 		CreateCancelButton();
 
-		if (Event.current.type == EventType.Repaint && GUI.tooltip != lastTooltip) {
+		if (Event.current.type == EventType.Repaint && GUI.tooltip != lastTooltip && GUI.enabled) {
 			if (lastTooltip != "")
 				SendMessage("OnMouseOut", SendMessageOptions.DontRequireReceiver);
 			if (GUI.tooltip != "" && GUI.tooltip != difficulty)
@@ -130,6 +142,7 @@ public class New_Game_GUI : Hex_GUI {
 		}
 	}
 
+	// Menu Hover Sound
 	private void OnMouseOver(){
 		menuHover.Play();
 	}
@@ -161,6 +174,7 @@ public class New_Game_GUI : Hex_GUI {
 		if (GUI.Button(new Rect(684, 427, 184, 47), "CANCEL")){
 			StartCoroutine(FadeOutGUI(1.0f, 0.0f, 0.5f));
 			StartCoroutine(guiController.SwitchGUI("Title_GUI", 0.5f));
+			cancelSelect.Play();
 		}
 	}
 }

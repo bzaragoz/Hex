@@ -19,7 +19,8 @@ Credits
 
 5) MP3Gain
 
--) Author: fins
+6) Author: fins
+   Source: Cancel Select Sound
    Link: https://www.freesound.org/people/fins/sounds/146718/
 
 -) Author: broumbroum
