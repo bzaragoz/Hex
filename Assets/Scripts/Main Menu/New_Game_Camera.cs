@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class New_Game_Camera : MonoBehaviour {
-
+	/*
 	private float startTime;
 	private float endTime;
 
@@ -33,5 +33,9 @@ public class New_Game_Camera : MonoBehaviour {
 			transform.Rotate(new Vector3(-speedPerFrame, 0.005f, 0.0f) * Time.deltaTime);
 		} else
 			transform.Rotate(new Vector3(-0.005f, 0.05f, 0.0f), Time.deltaTime);
+	}*/
+
+	void Update(){
+		transform.Rotate (new Vector3 (0.005f, 0.005f, 0.0f), Time.deltaTime);
 	}
 }

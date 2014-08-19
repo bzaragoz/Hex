@@ -33,7 +33,7 @@ public class New_Game_GUI : Hex_GUI {
 		LoadDifficulties();
 		LoadAudioSources();
 		guiAlpha = 0.0f;
-		StartCoroutine(FadeInGUI(0.0f, 1.0f, 1.0f, 1.5f));
+		StartCoroutine(FadeInGUI(0.0f, 1.0f, 1.0f, 0.0f));
 	}
 
 	// Load Difficulties
@@ -101,10 +101,6 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Create Difficulty Window
 	private void CreateDifficultyWindow(int windowID){
-		if (guiAlpha != 1.0f)
-			GUI.enabled = false;
-		else
-			GUI.enabled = true;
 		GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, guiAlpha);
 		CreateHeaderLabel();
 		CreateDifficultyToggles();
@@ -112,7 +108,7 @@ public class New_Game_GUI : Hex_GUI {
 		CreateOKButton();
 		CreateCancelButton();
 
-		if (Event.current.type == EventType.Repaint && GUI.tooltip != lastTooltip && GUI.enabled) {
+		if (Event.current.type == EventType.Repaint && GUI.tooltip != lastTooltip && guiAlpha == 1.0f) {
 			if (lastTooltip != "")
 				SendMessage("OnMouseOut", SendMessageOptions.DontRequireReceiver);
 			if (GUI.tooltip != "" && GUI.tooltip != difficulty)
@@ -136,7 +132,7 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Create Difficulty Toggle
 	private void CreateDifficultyToggle(Rect newRect, ref GUIStyle difficultyToggle, string difficulty){
-		if (GUI.Toggle (newRect, difficultyBool[difficulty], new GUIContent("", difficulty), difficultyToggle) != difficultyBool[difficulty]) {
+		if (GUI.Toggle (newRect, difficultyBool[difficulty], new GUIContent("", difficulty), difficultyToggle) != difficultyBool[difficulty] && guiAlpha == 1.0f) {
 			SetDifficulty (difficulty);
 			menuSelect.Play();
 		}
@@ -163,7 +159,7 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Create OK Button
 	private void CreateOKButton(){
-		if (GUI.Button(new Rect(490, 427, 184, 47), "OK", OKButton)){
+		if (GUI.Button(new Rect(490, 427, 184, 47), "OK", OKButton) && guiAlpha == 1.0f){
 			PlayerPrefs.SetString("difficulty", difficulty);
 			Application.LoadLevel("Main Menu");
 		}
@@ -171,7 +167,7 @@ public class New_Game_GUI : Hex_GUI {
 
 	// Create Cancel Button
 	private void CreateCancelButton(){
-		if (GUI.Button(new Rect(684, 427, 184, 47), "CANCEL")){
+		if (GUI.Button(new Rect(684, 427, 184, 47), "CANCEL") && guiAlpha == 1.0f){
 			StartCoroutine(FadeOutGUI(1.0f, 0.0f, 0.5f));
 			StartCoroutine(guiController.SwitchGUI("Title_GUI", 0.5f));
 			cancelSelect.Play();
