@@ -103,7 +103,7 @@ public class New_Game_GUI : Hex_GUI {
 		if (Event.current.type == EventType.Repaint && GUI.tooltip != lastTooltip) {
 			if (lastTooltip != "")
 				SendMessage("OnMouseOut", SendMessageOptions.DontRequireReceiver);
-			if (GUI.tooltip != "")
+			if (GUI.tooltip != "" && GUI.tooltip != difficulty)
 				SendMessage("OnMouseOver", SendMessageOptions.DontRequireReceiver);
 			
 			lastTooltip = GUI.tooltip;

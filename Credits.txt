@@ -8,13 +8,20 @@ Credits
    Source: Space Skybox
    Link: http://forum.unity3d.com/threads/space-skybox.99258/
 
-3) Author: broumbroum
+3) Author: Taira Komori
    Source: Difficulty Hover Sound
-   Link: https://www.freesound.org/people/broumbroum/sounds/50559/
-	 https://www.freesound.org/people/broumbroum/sounds/50560/
+   Link: https://www.freesound.org/people/Taira%20Komori/sounds/211771/
 
-4) Author: fins
+4) Author: broumbroum
    Source: Difficulty Select Sound
+   Link: https://www.freesound.org/people/broumbroum/sounds/50555/
+	 https://www.freesound.org/people/broumbroum/sounds/50556/
+
+5) MP3Gain
+
+-) Author: fins
    Link: https://www.freesound.org/people/fins/sounds/146718/
 
-4) MP3Gain
+-) Author: broumbroum
+   Link: https://www.freesound.org/people/broumbroum/sounds/50559/
+	 https://www.freesound.org/people/broumbroum/sounds/50560/
