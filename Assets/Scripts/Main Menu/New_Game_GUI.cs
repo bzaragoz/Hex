@@ -161,14 +161,13 @@ public class New_Game_GUI : Hex_GUI {
 	private void CreateOKButton(){
 		if (GUI.Button(new Rect(490, 427, 184, 47), "OK", OKButton) && guiAlpha == 1.0f){
 			PlayerPrefs.SetString("difficulty", difficulty);
-			Application.LoadLevel("Main Menu");
 		}
 	}
 
 	// Create Cancel Button
 	private void CreateCancelButton(){
 		if (GUI.Button(new Rect(684, 427, 184, 47), "CANCEL") && guiAlpha == 1.0f){
-			StartCoroutine(FadeOutGUI(1.0f, 0.0f, 0.5f));
+			StartCoroutine(FadeOutGUI(1.0f, 0.0f, 0.5f, 0.0f));
 			StartCoroutine(guiController.SwitchGUI("Title_GUI", 0.5f));
 			cancelSelect.Play();
 		}

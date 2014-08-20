@@ -46,7 +46,8 @@ public abstract class Hex_GUI : MonoBehaviour {
 	}
 
 	// Fade Out GUI
-	protected IEnumerator FadeOutGUI(float start, float end, float length){
+	protected IEnumerator FadeOutGUI(float start, float end, float length, float waitTime){
+		yield return new WaitForSeconds(waitTime);
 		for (float i = 0.0f; i <= 1.0f; i+=Time.deltaTime*(1/length))
 			yield return guiAlpha = Mathf.Lerp(start, end, i);
 		guiAlpha = end;
