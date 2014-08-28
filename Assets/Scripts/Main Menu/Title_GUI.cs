@@ -43,6 +43,10 @@ public class Title_GUI : Hex_GUI {
 	private static GUIStyle SettingsWindow;
 	private static GUIStyle DropDownButton;
 	private static GUIStyle DropDownMenu;
+	private static GUIStyle KeybindLabel;
+	private static GUIStyle ExitWindow;
+	private static GUIStyle KeybindToggle;
+	private static GUIStyle OKButton;
 
 	// Load-Window Textures
 	private static Texture2D autosaveTexture = (Texture2D)Resources.Load ("Textures/autosave");
@@ -62,13 +66,16 @@ public class Title_GUI : Hex_GUI {
 	static Rect loadGameWindow = new Rect(619, 30, 341, 542);
 	static Rect settingsTabWindow = new Rect(619, 30, 50, 542);
 	static Rect settingsWindow = new Rect(669, 30, 291, 542);
-	static Rect exitWindow = new Rect((Screen.width/2)-(0.24792f*Screen.width/2), (Screen.height/2)-(0.17833f*Screen.height/2), 0.24792f*Screen.width, 0.17833f*Screen.height);
+	static Rect exitWindow = new Rect(320, 240, 320, 120);
 
 	// Window Booleans
 	private Dictionary<string, bool> mainMenuBool = new Dictionary<string, bool>();
 	private string mainMenuSelection = "NONE";
 	private Dictionary<string, bool> settingsBool = new Dictionary<string, bool>();
 	private string settingsSelection = "GENERAL";
+	private Dictionary<string, bool> keybindBool = new Dictionary<string, bool>();
+	private Dictionary<string, string> keybindKeys = new Dictionary<string, string>();
+	private string keybindSelection = "NONE";
 
 	// String Variables
 	string loadGame = "none";
@@ -80,19 +87,27 @@ public class Title_GUI : Hex_GUI {
 	private AdvancedButton save2Button = new AdvancedButton( 0.1f, 0.3f, 1f );
 	private AdvancedButton save3Button = new AdvancedButton( 0.1f, 0.3f, 1f );
 
+	public float qualityVolume = 5.0F;
 	public float masterVolume = 5.0F;
 	public float backgroundVolume = 5.0F;
 	public float effectsVolume = 5.0F;
 	public float dialogVolume = 5.0F;
 	public float uiVolume = 5.0F;
-	public float qualityVolume = 5.0F;
 	public float mouseSensitivity = 5.0F;
 	public float damageTextSize = 5.0F;
+
+	private bool keybind = false;
 
 	private void Awake(){
 		LoadMainMenu();
 		LoadSettingsTabs();
+		LoadKeybindBools();
+		LoadKeybindKeys();
 		guiAlpha = 1.0f;
+
+		textLanguageList = new GUIContent[1];
+		textLanguageList[0] = new GUIContent ("English");
+		textLanguageControl.SetSelectedItemIndex(0);
 
 		resolutionList = new GUIContent[8];
 		resolutionList[0] = new GUIContent("Window");
@@ -141,10 +156,11 @@ public class Title_GUI : Hex_GUI {
 		shaderQualityList[1] = new GUIContent("Medium");
 		shaderQualityList[2] = new GUIContent("High");
 		shaderQualityControl.SetSelectedItemIndex(1);
+	}
 
-		textLanguageList = new GUIContent[1];
-		textLanguageList[0] = new GUIContent ("English");
-		shaderQualityControl.SetSelectedItemIndex(0);
+	private void Update(){
+		if (keybind)
+			BindKey(keybindSelection);
 	}
 
 	// Load Main Menu
@@ -160,6 +176,86 @@ public class Title_GUI : Hex_GUI {
 		settingsBool.Add("GRAPHICS", false);
 		settingsBool.Add("SOUND", false);
 		settingsBool.Add("CONTROLS", false);
+	}
+
+	// Load Keybind Booleans
+	private void LoadKeybindBools(){
+		keybindBool.Add("UP", false);
+		keybindBool.Add("LEFT", false);
+		keybindBool.Add("DOWN", false);
+		keybindBool.Add("RIGHT", false);
+		keybindBool.Add("INTERACT", false);
+		keybindBool.Add("ATTACK", false);
+		keybindBool.Add("SPECIAL", false);
+		keybindBool.Add("MELEE", false);
+		keybindBool.Add("RANGED", false);
+		keybindBool.Add("MAGIC", false);
+		keybindBool.Add("ITEM 1", false);
+		keybindBool.Add("ITEM 2", false);
+		keybindBool.Add("BLOCK", false);
+	}
+
+	// Load Keybinds
+	private void LoadKeybindKeys(){
+		keybindKeys.Add("UP", "W");
+		keybindKeys.Add("LEFT", "A");
+		keybindKeys.Add("DOWN", "S");
+		keybindKeys.Add("RIGHT", "D");
+		keybindKeys.Add("INTERACT", "F");
+		keybindKeys.Add("ATTACK", "LMB");
+		keybindKeys.Add("SPECIAL", "RMB");
+		keybindKeys.Add("MELEE", "1");
+		keybindKeys.Add("RANGED", "2");
+		keybindKeys.Add("MAGIC", "3");
+		keybindKeys.Add("ITEM 1", "4");
+		keybindKeys.Add("ITEM 2", "5");
+		keybindKeys.Add("BLOCK", "SHIFT");
+	}
+
+	// Reset General
+	private void ResetGeneral(){
+		textLanguageControl.SetSelectedItemIndex(0);
+		damageTextSize = 5.0F;
+	}
+
+	// Reset Graphics
+	private void ResetGraphics(){
+		resolutionControl.SetSelectedItemIndex(7);
+		visualQualityControl.SetSelectedItemIndex(1);
+		interfaceSizeControl.SetSelectedItemIndex(1);
+		antiAliasingControl.SetSelectedItemIndex(1);
+		textureQualityControl.SetSelectedItemIndex(1);
+		shadowQualityControl.SetSelectedItemIndex(2);
+		shaderQualityControl.SetSelectedItemIndex(1);
+	}
+
+	// Reset Sound
+	private void ResetSound(){
+		qualityVolume = 5.0F;
+		masterVolume = 5.0F;
+		backgroundVolume = 5.0F;
+		effectsVolume = 5.0F;
+		dialogVolume = 5.0F;
+		uiVolume = 5.0F;
+	}
+
+	// Reset Controls
+	private void ResetControls(){
+		mouseSensitivity = 5.0F;
+
+		keybindKeys["UP"] = "W";
+		keybindKeys["LEFT"] = "A";
+		keybindKeys["DOWN"] = "S";
+		keybindKeys["RIGHT"] = "D";
+		keybindKeys["INTERACT"] = "F";
+		keybindKeys["ATTACK"] = "LMB";
+		keybindKeys["SPECIAL"] = "RMB";
+		keybindKeys["MELEE"] = "1";
+		keybindKeys["RANGED"] = "2";
+		keybindKeys["MAGIC"] = "3";
+		keybindKeys["ITEM 1"] = "4";
+		keybindKeys["ITEM 2"] = "5";
+		keybindKeys["BLOCK"] = "SHIFT";
 	}
 	
 	// Set Main Menu
@@ -192,6 +288,23 @@ public class Title_GUI : Hex_GUI {
 		}
 	}
 
+	// Set Keybind Toggles
+	private void SetKeybindToggles(string keybindSelection){
+		List<string> keys = new List<string>(keybindBool.Keys);
+		
+		foreach(string key in keys){
+			if (key == keybindSelection){
+				if (keybindBool[key] == false)
+					keybindBool[key] = true;
+				else
+					keybindBool[key] = false;
+			}
+			else
+				keybindBool[key] = false;
+			this.keybindSelection = keybindSelection;
+		}
+	}
+
 	// Load Skin
 	protected override void LoadSkin(){
 		skin = (GUISkin)Resources.Load("Skins/TitleSkin");
@@ -219,6 +332,10 @@ public class Title_GUI : Hex_GUI {
 		SettingsWindow = skin.GetStyle("SettingsWindow");
 		DropDownButton = skin.GetStyle("DropDownButton");
 		DropDownMenu = skin.GetStyle("DropDownMenu");
+		KeybindLabel = skin.GetStyle("KeybindLabel");
+		ExitWindow = skin.GetStyle("ExitWindow");
+		KeybindToggle = skin.GetStyle("KeybindToggle");
+		OKButton = skin.GetStyle("OKButton");
 	}
 
 	// Load GUI
@@ -260,7 +377,7 @@ public class Title_GUI : Hex_GUI {
 
 	// Load Exit Window
 	private void LoadExitWindow(){
-		exitWindow = GUI.Window (6, exitWindow, ExitItems, "");
+		exitWindow = GUI.Window (6, exitWindow, ExitItems, "", ExitWindow);
 	}
 
 	// Create Matte Box
@@ -398,7 +515,14 @@ public class Title_GUI : Hex_GUI {
 		else if (settingsBool["CONTROLS"])
 			ControlsItems();
 		if (GUI.Button(new Rect(10, 482, 131, 39), "AUTO", LoadButton)){ //493
-			mainMenuBool["SETTINGS"] = false;
+			if (settingsBool["GENERAL"])
+				ResetGeneral();
+			if (settingsBool["GRAPHICS"])
+				ResetGraphics();
+			if (settingsBool["SOUND"])
+				ResetSound();
+			if (settingsBool["CONTROLS"])
+				ResetControls();
 		}
 		if (GUI.Button(new Rect(150, 482, 131, 39), "CANCEL", LoadButton)){ //493
 			settingsTab = "general";
@@ -479,30 +603,63 @@ public class Title_GUI : Hex_GUI {
 		GUI.Label(new Rect(26, 49, 120, 20), "MOUSE");
 		GUI.Label(new Rect(42, 78, 120, 20), "Sensitivity");
 		GUI.Label(new Rect(26, 137, 120, 20), "KEYBINDS");
-		GUI.Label(new Rect(42, 166, 100, 20), "Up");
-		GUI.Label(new Rect(42, 186, 100, 20), "Left");
-		GUI.Label(new Rect(42, 206, 100, 20), "Down");
-		GUI.Label(new Rect(42, 226, 100, 20), "Right");
-		GUI.Label(new Rect(42, 246, 100, 20), "Interact");
-		GUI.Label(new Rect(42, 266, 100, 20), "Attack");
-		GUI.Label(new Rect(42, 286, 100, 20), "Special Attack");
-		GUI.Label(new Rect(42, 306, 100, 20), "Melee Weapon");
-		GUI.Label(new Rect(42, 326, 100, 20), "Ranged Weapon");
-		GUI.Label(new Rect(42, 346, 100, 20), "Magic");
-		GUI.Label(new Rect(42, 366, 100, 20), "Item 1");
-		GUI.Label(new Rect(42, 386, 100, 20), "Item 2");
-		GUI.Label(new Rect(42, 406, 100, 20), "Block");
+		GUI.Label(new Rect(42, 166, 100, 20), "Up", KeybindLabel);
+		GUI.Label(new Rect(42, 186, 100, 20), "Left", KeybindLabel);
+		GUI.Label(new Rect(42, 206, 100, 20), "Down", KeybindLabel);
+		GUI.Label(new Rect(42, 226, 100, 20), "Right", KeybindLabel);
+		GUI.Label(new Rect(42, 246, 100, 20), "Interact", KeybindLabel);
+		GUI.Label(new Rect(42, 266, 100, 20), "Attack", KeybindLabel);
+		GUI.Label(new Rect(42, 286, 100, 20), "Special", KeybindLabel);
+		GUI.Label(new Rect(42, 306, 100, 20), "Melee", KeybindLabel);
+		GUI.Label(new Rect(42, 326, 100, 20), "Ranged", KeybindLabel);
+		GUI.Label(new Rect(42, 346, 100, 20), "Magic", KeybindLabel);
+		GUI.Label(new Rect(42, 366, 100, 20), "Item 1", KeybindLabel);
+		GUI.Label(new Rect(42, 386, 100, 20), "Item 2", KeybindLabel);
+		GUI.Label(new Rect(42, 406, 100, 20), "Block", KeybindLabel);
+		
+		CreateKeybindToggle(new Rect(158, 166, 100, 20), "UP");
+		CreateKeybindToggle(new Rect(158, 186, 100, 20), "LEFT");
+		CreateKeybindToggle(new Rect(158, 206, 100, 20), "DOWN");
+		CreateKeybindToggle(new Rect(158, 226, 100, 20), "RIGHT");
+		CreateKeybindToggle(new Rect(158, 246, 100, 20), "INTERACT");
+		CreateKeybindToggle(new Rect(158, 266, 100, 20), "ATTACK");
+		CreateKeybindToggle(new Rect(158, 286, 100, 20), "SPECIAL");
+		CreateKeybindToggle(new Rect(158, 306, 100, 20), "MELEE");
+		CreateKeybindToggle(new Rect(158, 326, 100, 20), "RANGED");
+		CreateKeybindToggle(new Rect(158, 346, 100, 20), "MAGIC");
+		CreateKeybindToggle(new Rect(158, 366, 100, 20), "ITEM 1");
+		CreateKeybindToggle(new Rect(158, 386, 100, 20), "ITEM 2");
+		CreateKeybindToggle(new Rect(158, 406, 100, 20), "BLOCK");
 
 		mouseSensitivity = GUI.HorizontalSlider(new Rect(58, 98, 200, 20), mouseSensitivity, 0.0F, 10.0F);
 	}
 
+	// Create Keybind Toggle
+	private void CreateKeybindToggle(Rect newRect, string keybindSelection){
+		if (GUI.Toggle(newRect, keybindBool[keybindSelection], keybindKeys[keybindSelection], KeybindToggle) != keybindBool[keybindSelection]){
+			SetKeybindToggles(keybindSelection);
+			if (keybindBool[keybindSelection])
+				keybind = true;
+				this.keybindSelection = keybindSelection;
+		}
+	}
+
+	private void BindKey(string keybindSelection){
+		string temp = Input.inputString.ToUpper();
+		if (temp != "") {
+			keybindKeys[keybindSelection] = temp;
+			keybindBool[keybindSelection] = false;
+			keybind = false;
+		}
+	}
+
 	// Exit
 	void ExitItems(int windowID){
-		GUI.Label(new Rect(0,0, 200, 25), "Are you sure you want to exit?");
-		if (GUI.Button (new Rect(0.01146f*Screen.width, 0.105f*Screen.height, 0.10625f*Screen.width, 0.05667f*Screen.height), "OK")) {
+		GUI.Label(new Rect(36, 25, 250, 18), "Are you sure you want to exit HEX?");
+		if (GUI.Button (new Rect(24, 57, 130, 40), "OK", OKButton)) {	//115 and 35
 			Application.Quit();
 		}
-		if (GUI.Button(new Rect(0.13021f*Screen.width, 0.105f*Screen.height, 0.10625f*Screen.width, 0.05667f*Screen.height), "CANCEL")){
+		if (GUI.Button(new Rect(164, 57, 130, 40), "CANCEL")){
 			mainMenuBool["EXIT"] = false;
 		}
 	}
